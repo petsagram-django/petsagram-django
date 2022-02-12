@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <h1 class="text-center">Edit Pet Photo</h1>
+    <img src="{{ photo_url.url }}"
+         class="w-50 rounded mx-auto d-block" alt="Photo description" width="150" height="250">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+                {{ photo_form }}
+
+                <button class="btn btn-primary mt-2" type="submit">Edit</button>
+            </form>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+{% endblock %}

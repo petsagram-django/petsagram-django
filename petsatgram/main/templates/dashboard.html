@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+    {% if pet_photos %}
+        <!-- If there are pet photos -->
+        <h1 class='text-center'>All Pet Photos</h1>
+        <div class="container mb-5">
+        <div class="row mb-5">
+
+        {% for photo in pet_photos %}
+
+        <div class="card ml-3 mb-3" style="width: 18rem;">
+            <!-- Image -->
+            <img src="{{ photo.photo.url }}"
+                 class="card-img-top" alt="Photo description">
+            <div class="card-body">
+                {#  many to many relation #}
+                {% for pet in photo.tagged_pets.all %}
+                    <!-- Info for each pet on the photo -->
+                    <h5 class="card-title">{{ pet.name }} {% if pet.date_of_birth %} ,{{ pet.age }} years old
+                                                            {% endif %}</h5>
+                {% endfor %}
+                <!-- First 30 chars from the description -->
+                <p class="card-text">{{ photo.description|truncatechars:30 }}</p>
+                <!-- Button to the Photo Details Page -->
+                <a href="{% url 'photo_details' photo.id %}" class="btn btn-primary">See details</a>
+            </div>
+        </div>
+        {% endfor %}
+
+
+    {% else %}
+        <!-- If there are NO pet photos -->
+        <h1 class='text-center'>No pet photos yet</h1>
+        <div class=" row d-flex justify-content-center align-content-center">
+            <!-- Button to Add a new Photo -->
+            <a href="{% url 'create photo' %}" class="btn btn-lg btn-secondary row align-self-baseline">Add Photo</a>
+        </div>
+
+
+    {% endif %}
+
+</div>
+</div>
+    <!-- End Pet Photos -->
+{% endblock %}
+
